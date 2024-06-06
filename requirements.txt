@@ -1,0 +1,5 @@
+Flask==2.0.3
+Werkzeug==2.0.3
+python-dotenv==0.19.2
+spotipy==2.19.0
+requests==2.26.0

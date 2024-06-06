@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Data</title>
+    <style>
+        body {
+            background-color: #121212;
+            font-family: Arial, sans-serif;
+            margin: 0; /* Remove the default margin */
+            display: flex; /* Use Flexbox to center the container */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 0.3fr 2.5fr 0.3fr;
+            grid-template-rows: auto 1fr auto;
+            gap: 0px 0px;
+            grid-auto-flow: row;
+            grid-template-areas:
+                "header header header"
+                "sideA main sideB"
+                "sideA main sideB";
+            width: 100%; /* Ensure the grid container takes full width */
+            max-width: 1300px; /* Optional: Limit the maximum width */
+            height: auto; /* Adjust height to the content */
+        }
+
+            .header { grid-area: header; }
+
+            .main { grid-area: main; }
+
+            .sideA { grid-area: sideA; }
+
+            .sideB { grid-area: sideB; }
+
+        .welcometitle {
+            margin-top: 10px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            color: #ffff;
+            font-family: var(--font-family, CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif)), Helvetica, Arial, sans-serif;
+        }
+        h1 {
+            color: #ffff;
+            font-size: 3.5rem;
+            font-weight: 1000;
+            font-family: var(--font-family, CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif)), Helvetica, Arial, sans-serif;
+        }
+        h2 {
+            color: #ffff;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: var(--font-family, CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif)), Helvetica, Arial, sans-serif;
+        }
+        .tracks {
+            margin-bottom: 30px;
+        }
+        .top5{
+            justify-content: center;
+            align-items: center;
+            max-width: 1000px;
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-bottom: 25px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: var(--font-family, CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif)), Helvetica, Arial, sans-serif;
+            /* From https://css.glass */
+            background: #242424;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            margin: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .top10{
+            justify-content: center;
+            align-items: center;
+            max-width: 1300px;
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-bottom: 25px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: var(--font-family, CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif)), Helvetica, Arial, sans-serif;
+            /* From https://css.glass */
+            background: #242424;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            margin: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .artists {
+            justify-content: center;
+            align-items: center;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            justify-items: center;
+            margin-top: 30px;
+            color: #1db954;
+        }
+        .artist {
+            display: flex;
+            flex-direction: column;
+            font-size: 1rem;
+            text-align: left;
+            text-transform: uppercase;
+            font-family: var(--font-family, CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif)), Helvetica, Arial, sans-serif;
+        }
+        .artist img {
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            margin-right: 5px;
+            width: 200px;
+            height: 200px;
+        }
+        .top-tracks {
+            font-size: 1rem;
+            margin-top: 30px;
+        }
+        .geners {
+            margin-top: 30px;
+        }
+        ul {
+            color: #ffff;
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            color: #ffff;
+            margin-bottom: 5px;
+        }
+
+        @media screen and (max-width: 600px)
+        {
+        .body {
+            background-color: #121212;
+            font-family: Arial, sans-serif;
+            margin: 0; /* Remove the default margin */
+            display: flex; /* Use Flexbox to center the container */
+            justify-content: center;
+            align-items: center;
+        }
+        .welcometitle {
+            margin-top: 10px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            color: #ffff;
+            font-family: var(--font-family, CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif)), Helvetica, Arial, sans-serif;
+        }
+        h1 {
+            color: #ffff;
+            font-size: 2rem;
+            font-weight: 1000;
+            font-family: var(--font-family, CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif)), Helvetica, Arial, sans-serif;
+        }
+        h2 {
+            color: #ffff;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: var(--font-family, CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif)), Helvetica, Arial, sans-serif;
+        }
+        .top5, .top10 {
+            justify-content: center;
+            align-items: center;
+            max-width: 250px;
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-bottom: 25px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: var(--font-family, CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif)), Helvetica, Arial, sans-serif;
+            background: #242424;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            margin: 15px;
+            border-radius: 8px;
+            overflow: hidden; /* Prevent content overflow */
+        }
+        .artists {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column for stacking */
+    justify-items: center;
+    margin-top: 30px;
+    color: #1db954;
+}
+
+.artist {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align the content horizontally */
+    font-size: 1rem;
+    text-align: left;
+    text-transform: uppercase;
+    font-family: var(--font-family, CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif)), Helvetica, Arial, sans-serif;
+    margin-bottom: 20px; /* Add some space between the items */
+}
+
+.artist img {
+    border-radius: 8px;
+    margin-bottom: 10px; /* Add some space between the image and the text */
+    width: 200px;
+    height: 200px;
+}
+        .top-tracks {
+            font-size: 1rem;
+            margin-top: 30px;
+        }
+        .geners {
+            margin-top: 30px;
+        }
+        ul {
+            color: #ffff;
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            color: #ffff;
+            margin-bottom: 5px;
+        }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="welcometitle">
+                <h1>Hello <span style="color: #1db954;">{{ username }}<span style="color: #ffffff;">,</span></h1>
+                <h2>Welcome To Your Spotify Summary</h2>
+            </div>
+        </div>
+
+        <div class="main">
+        <div class="top5">
+            <h3><span style="color: #1db954;">Top <span style="color: #ffffff;">5</span> Artists</span></h3>
+            <div class="artists">
+                {% for artist in top_artists %}
+                    <div class="artist">
+                        <span><span style="color: #ffffff;">#{{ loop.index }}</span></span>
+                        {% if artist.image %}
+                            <img src="{{ artist.image }}" alt="{{ artist.name }}">
+                        {% endif %}
+                        {{ artist.name }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="top10">
+            <h3><span style="color: #1db954;">Top <span style="color: #ffffff;">10</span> Tracks</span></h3>
+            <div class="top-tracks">
+                <ul>
+                    {% for track in top_tracks %}
+                        <li>{{ loop.index }}. {{ track.artist }} - {{ track.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="sideA"></div>
+    <div class="sideB"></div>
+</div>
+</body>
+</html>
